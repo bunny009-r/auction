@@ -11,6 +11,9 @@ namespace project.js
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //HttpCookie email = Response.Cookies.Get("email");
+            Response.Cookies.Clear();
+            Session.Clear();
             Session.Abandon();
             Session.Clear();
             Response.Redirect("login.aspx");

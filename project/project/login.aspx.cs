@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
+using System.Web.SessionState;
 
 namespace project
 {
@@ -31,6 +32,7 @@ namespace project
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            HttpCookie email = new HttpCookie("email");
             
 
             if (con.State == ConnectionState.Closed)
@@ -44,6 +46,10 @@ namespace project
                 Session["user"] = selectReader.GetValue(0).ToString();
                 con.Close();
                 Label1.Text = "";
+                email.Value = TextBox1.Text.ToString();
+                Response.Cookies.Add(email);
+                //ScriptManager.RegisterStartupScript(this, this.GetType(), Guid.NewGuid().ToString(),
+                //      "onLogIn('" + TextBox1.Text.ToString() + "');", true);
                 Response.Redirect("home.aspx");
             }
             else

@@ -63,16 +63,26 @@ namespace project
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            con.Open();
-            String insertQry = "insert into [bidamount] (amount ) values (@amount)";
-            SqlCommand insertCmd = new SqlCommand(insertQry, con);
-            insertCmd.Parameters.AddWithValue("@amount", amount.Text.ToString());
+            //HttpCookie email = new HttpCookie("email");
+            var email = Response.Cookies.Get("email").Value.ToString();
+            if (email != "" || email != null)
+            {
+                con.Open();
+                String insertQry = "insert into [bidamount] (amount, email ) values (@amount, @email)";
+                SqlCommand insertCmd = new SqlCommand(insertQry, con);
+                insertCmd.Parameters.AddWithValue("@amount", amount.Text.ToString());
+                insertCmd.Parameters.AddWithValue("@email", email);
 
 
-            insertCmd.ExecuteNonQuery();
-            con.Close();
-            litBidSuccessful.Text = "<script>showBidSuccessfulAlert();</script>";
-            Response.Redirect("home.aspx");
+                insertCmd.ExecuteNonQuery();
+                con.Close();
+                litBidSuccessful.Text = "<script>showBidSuccessfulAlert();</script>";
+                Response.Redirect("home.aspx");
+            }
+            else
+            {
+                Response.Redirect("login.aspx");
+            }
         }
 
     }

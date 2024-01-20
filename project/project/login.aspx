@@ -39,4 +39,9 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+    function onLogIn(email) {
+        localStorage.setItem("email", email);
+    }
+</script>
 </asp:Content>
